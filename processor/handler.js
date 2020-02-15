@@ -91,8 +91,10 @@ class SimpleApp extends TransactionHandler {
   }
 
   async addValue(context, opAddress) {
+
     let currentState = await context.getState([opAddress]);
-    let newState = currentState ? parseInt(currentState) + 1 : 1
+    let readableState = (currentState[opAddress].toString())
+    let newState = readableState ? parseInt(readableState) + 1 : 1
     let newStateData = encoder.encode(newState.toString())
     let data_to_be_entered = {
       [opAddress]: newStateData
@@ -109,8 +111,9 @@ class SimpleApp extends TransactionHandler {
 
   async subtractValue(context, opAddress) {
     let currentState = await context.getState([opAddress]);
-	console.log("testsssss",currentState)
-    let newState = currentState ? parseInt(currentState) - 1 : 0
+    let readableState = (currentState[opAddress].toString())
+	console.log("testsssss",readableState,"--------------",currentState[opAddress])
+    let newState = readableState ? (parseInt(readableState) - 1) : 0
     let newStateData = encoder.encode(newState.toString())
     let data_to_be_entered = {
       [opAddress]: newStateData

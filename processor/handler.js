@@ -61,9 +61,9 @@ class SimpleApp extends TransactionHandler {
       // console.log('getState From the context', current)
       return this.setValue(stateStore, address, update.value)
     } else if (update.action === 'add') {
-      return this.addValue(context, address)
+      return this.addValue(stateStore, address)
     } else if (update.action === 'sub') {
-      return this.subtractValue(context, address)
+      return this.subtractValue(stateStore, address)
     } else {
       throw new InvalidTransaction(
         `Action must be create, delete, or take not ${payload.action}`
@@ -92,7 +92,7 @@ class SimpleApp extends TransactionHandler {
 
   async addValue(context, opAddress) {
     let currentState = await context.getState([opAddress]);
-    let newState = parseInt(currentState) + 1
+    let newState = currentState ? parseInt(currentState) + 1 : 1
     let newStateData = encoder.encode(newState.toString())
     let data_to_be_entered = {
       [opAddress]: newStateData
@@ -109,7 +109,8 @@ class SimpleApp extends TransactionHandler {
 
   async subtractValue(context, opAddress) {
     let currentState = await context.getState([opAddress]);
-    let newState = parseInt(currentState) - 1
+	console.log("testsssss",currentState)
+    let newState = currentState ? parseInt(currentState) - 1 : 0
     let newStateData = encoder.encode(newState.toString())
     let data_to_be_entered = {
       [opAddress]: newStateData

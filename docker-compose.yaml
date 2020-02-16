@@ -1,5 +1,11 @@
 version: '2.0'
 services:
+  node_client:
+    build:
+      context: .
+      dockerfile: test123/Dockerfile
+    ports:
+      - '3000:3000'
   simple_sawtooth_app:
     container_name: simpleapp-processor
     build:

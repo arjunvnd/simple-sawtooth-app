@@ -66,7 +66,7 @@ class SimpleApp extends TransactionHandler {
       return this.subtractValue(stateStore, address,update.value)
     } else {
       throw new InvalidTransaction(
-        `Action must be create, delete, or take not ${payload.action}`
+        `Action must be create, delete, or take not`
       )
     }
   }

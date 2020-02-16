@@ -82,7 +82,7 @@ const batchListBytes = protobuf.BatchList.encode({
 
 
 request.post({
-    url: 'http://localhost:8008/batches',
+    url: 'http://rest-api:8008/batches',
     body: batchListBytes,
     headers: {'Content-Type': 'application/octet-stream'}
 }, (err, response) => {
@@ -97,7 +97,7 @@ request.post({
 })
 
 app.get('/',(req,res)=>{
-  request.get('http://localhost:8008/state/91747944f12ee39a6ebd0cb736c1bbb4ef5ac8159569dd63f2cb43fc99546712336f60',
+  request.get('http://rest-api:8008/state/91747944f12ee39a6ebd0cb736c1bbb4ef5ac8159569dd63f2cb43fc99546712336f60',
   (err,resp)=>{
     if(err){
       console.log(err)

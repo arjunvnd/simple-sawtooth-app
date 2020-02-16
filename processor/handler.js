@@ -61,9 +61,9 @@ class SimpleApp extends TransactionHandler {
       // console.log('getState From the context', current)
       return this.setValue(stateStore, address, update.value)
     } else if (update.action === 'add') {
-      return this.addValue(stateStore, address)
+      return this.addValue(stateStore, address,update.value)
     } else if (update.action === 'sub') {
-      return this.subtractValue(stateStore, address)
+      return this.subtractValue(stateStore, address,update.value)
     } else {
       throw new InvalidTransaction(
         `Action must be create, delete, or take not ${payload.action}`
@@ -90,11 +90,11 @@ class SimpleApp extends TransactionHandler {
 
   }
 
-  async addValue(context, opAddress) {
+  async addValue(context, opAddress,value) {
 
     let currentState = await context.getState([opAddress]);
     let readableState = (currentState[opAddress].toString())
-    let newState = readableState ? parseInt(readableState) + 1 : 1
+    let newState = readableState ? (parseInt(readableState) + parseInt(value)) : 1
     let newStateData = encoder.encode(newState.toString())
     let data_to_be_entered = {
       [opAddress]: newStateData
@@ -109,11 +109,11 @@ class SimpleApp extends TransactionHandler {
 
   }
 
-  async subtractValue(context, opAddress) {
+  async subtractValue(context, opAddress,value) {
     let currentState = await context.getState([opAddress]);
     let readableState = (currentState[opAddress].toString())
 	console.log("testsssss",readableState,"--------------",currentState[opAddress])
-    let newState = readableState ? (parseInt(readableState) - 1) : 0
+    let newState = readableState ? (parseInt(readableState) - parseInt(value)) : 0
     let newStateData = encoder.encode(newState.toString())
     let data_to_be_entered = {
       [opAddress]: newStateData
